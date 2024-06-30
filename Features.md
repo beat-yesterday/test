@@ -1,0 +1,11 @@
+- Mock server
+	- [Mock Service Worker](https://github.com/mswjs/msw)
+- Fake data
+	- [Faker](https://fakerjs.dev/)
+	- [JSF](https://github.com/json-schema-faker/json-schema-faker/tree/d4403ae6cdba2206fe86399900c4095de8db7d2a/docs)
+- Persist data
+
+- State management
+- [File upload zone](https://stackblitz.com/edit/file-upload-drag-n-drop-hye6lv?file=src%2Fapp%2Fapp.component.html)
+- [Upload Related](https://juejin.cn/post/6844903513882001422)
+- 
