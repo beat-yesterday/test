@@ -8,4 +8,9 @@
 - State management
 - [File upload zone](https://stackblitz.com/edit/file-upload-drag-n-drop-hye6lv?file=src%2Fapp%2Fapp.component.html)
 - [Upload Related](https://juejin.cn/post/6844903513882001422)
+- [Upload and edit](https://juejin.cn/post/7148260919045750815)
+- [Display grid data](https://github.com/ag-grid/ag-grid)
+- [NGXS](https://www.ngxs.io/readme/intro)
+- [可视化拖拽组件](https://juejin.cn/post/6908502083075325959)
+- [Grid view system](https://www.home-assistant.io/blog/2024/03/04/dashboard-chapter-1/)
 - 

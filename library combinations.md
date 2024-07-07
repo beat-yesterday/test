@@ -1,0 +1,5 @@
+- `NGXS` - state management
+- `immer` - immutable update
+- [json schema to ts](https://github.com/bcherny/json-schema-to-typescript)
+- [JSON SCHEMA FAKER](https://github.com/json-schema-faker/json-schema-faker/tree/master/docs)
+- 
