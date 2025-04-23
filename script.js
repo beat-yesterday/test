@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-
+import { Line2 } from "three/examples/jsm/lines/Line2.js";
+import { LineGeometry } from "three/examples/jsm/lines/LineGeometry.js";
+import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js";
 /**
  * Cursor
  */
@@ -79,9 +81,21 @@ const devices = [
 
 const lineGroup = new THREE.Group();
 devices.forEach(([posA, posB]) => {
-  const lineGeometry = new THREE.BufferGeometry().setFromPoints([posA, posB]);
-  const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
-  const line = new THREE.Line(lineGeometry, lineMaterial);
+  const lineGeometry = new LineGeometry().setPositions([
+    posA.x,
+    posA.y,
+    posA.z,
+    posB.x,
+    posB.y,
+    posB.z,
+  ]);
+  const lineMaterial = new LineMaterial({
+    color: 0xffffff,
+    linewidth: 5,
+    resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
+  });
+  const line = new Line2(lineGeometry, lineMaterial);
+  line.computeLineDistances();
   lineGroup.add(line);
 });
 scene.add(lineGroup);
@@ -100,8 +114,8 @@ scene.add(lineGroup);
 
 const dotGroup = new THREE.Group();
 const dotSet = [];
-devices.forEach((pos, index)=> {
-  const dotGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+devices.forEach((pos, index) => {
+  const dotGeometry = new THREE.SphereGeometry(0.25, 32, 32);
   const dotMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
   const dots = [
     new THREE.Mesh(dotGeometry, dotMaterial),
@@ -109,15 +123,25 @@ devices.forEach((pos, index)=> {
     new THREE.Mesh(dotGeometry, dotMaterial),
     new THREE.Mesh(dotGeometry, dotMaterial),
   ];
+
+  const portGeometry = new THREE.SphereGeometry(0.25, 32, 32);
+  const sourceMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+  const targetMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+  const source = new THREE.Mesh(portGeometry, sourceMaterial);
+  const target = new THREE.Mesh(portGeometry, targetMaterial);
   const subDotGroup = new THREE.Group();
   dots.forEach((dot, idx) => {
     dot.position.copy(devices[index][0]); // 初始位置为点 A
     dot.visible = false;
     subDotGroup.add(dot);
   });
+  source.position.copy(devices[index][0]);
+  target.position.copy(devices[index][1]);
   dotSet[index] = [...dots];
-  dotGroup.add(subDotGroup)
-})
+  dotGroup.add(subDotGroup);
+  dotGroup.add(source);
+  dotGroup.add(target);
+});
 scene.add(dotGroup);
 // dots.forEach((dot, index) => {
 //   dot.position.copy(pointA); // 初始位置为点 A
@@ -126,7 +150,7 @@ scene.add(dotGroup);
 // });
 
 // 动画参数
-const speed = 0.001; // 控制移动速度
+const speed = 0.0005; // 控制移动速度
 let progress = [-0.75, -0.5, -0.25, 0]; // 每个圆点的进度
 
 const updatePoints = () => {
@@ -138,11 +162,13 @@ const updatePoints = () => {
       // 根据进度计算当前位置
       if (progress[index] >= 0) {
         dot.visible = true;
-        const position = devices[idx][0].clone().lerp(devices[idx][1], progress[index]);
+        const position = devices[idx][0]
+          .clone()
+          .lerp(devices[idx][1], progress[index]);
         dot.position.copy(position);
       }
     });
-  })
+  });
 };
 // Animate
 const clock = new THREE.Clock();
