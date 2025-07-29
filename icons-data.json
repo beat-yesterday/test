@@ -1,0 +1,16 @@
+[
+  {
+    "name": "房子",
+    "category": "通用",
+    "key": "icon-home",
+    "tags": ["main", "page"]
+  },
+  {
+    "name": "设置",
+    "category": "通用",
+    "key": "icon-settings",
+    "tags": ["config", "options"]
+  },
+  { "name": "用户", "category": "人物", "key": "icon-user" },
+  { "name": "图表", "category": "数据", "key": "icon-chart" }
+]

@@ -1,0 +1,62 @@
+<div class="icon-picker-container">
+  <h1 mat-dialog-title>选择图标</h1>
+
+  <div class="picker-header">
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-label>搜索图标</mat-label>
+      <input matInput [formControl]="searchControl" placeholder="按名称搜索" />
+    </mat-form-field>
+
+    <mat-button-toggle-group
+      class="category-group"
+      (valueChange)="onCategoryChange($event)"
+      [value]="selectedCategory"
+    >
+      <mat-button-toggle *ngFor="let category of categories" [value]="category">
+        {{ category === 'all' ? '全部' : category }}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div mat-dialog-content class="picker-content">
+    <div
+      class="icon-grid"
+      [style.grid-template-columns]="'repeat(' + cols + ', 1fr)'"
+    >
+      <div
+        class="icon-item"
+        *ngFor="let icon of paginatedIcons"
+        (click)="selectIcon(icon)"
+        (keydown)="selectIcon(icon)"
+        mat-ripple
+        tabindex="0"
+      >
+        <svg class="icon-svg">
+          <use [attr.xlink:href]="getIconUrl(icon.key)"></use>
+        </svg>
+        <span class="icon-name">{{ icon.name }}</span>
+      </div>
+      <div *ngIf="paginatedIcons.length === 0" class="no-icons-found">
+        没有找到匹配的图标
+      </div>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="picker-footer">
+    <button
+      mat-icon-button
+      (click)="goToPage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <span>第 {{ currentPage }} 页 / 共 {{ totalPages }} 页</span>
+    <button
+      mat-icon-button
+      (click)="goToPage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</div>
