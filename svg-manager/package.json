@@ -1,0 +1,11 @@
+"scripts": {
+  "ng": "ng",
+  "start": "ng serve",
+  "build": "ng build",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test",
+  "sprite:clean": "rm -rf src/assets/svg-icons-optimized src/assets/icons/sprite.svg",
+  "sprite:optimize": "svgo -f src/assets/svg-icons-raw -o src/assets/svg-icons-optimized",
+  "sprite:create": "svg-sprite-cli --symbol --symbol-dest src/assets/icons --symbol-sprite sprite.svg src/assets/svg-icons-optimized/*.svg",
+  "sprite:build": "npm run sprite:clean && npm run sprite:optimize && npm run sprite:create"
+}
